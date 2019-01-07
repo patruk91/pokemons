@@ -1,13 +1,13 @@
-pokemons = "audino bagon baltoy banette bidoof braviary bronzor carracosta charmeleon \
-cresselia croagunk darmanitan deino emboar emolga exeggcute gabite \
-girafarig gulpin haxorus heatmor heatran ivysaur jellicent jumpluff kangaskhan \
-kricketune landorus ledyba loudred lumineon lunatone machamp magnezone mamoswine \
-nosepass petilil pidgeotto pikachu pinsir poliwrath poochyena porygon2 \
-porygonz registeel relicanth remoraid rufflet sableye scolipede scrafty seaking \
-sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko \
-tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask"
+import os
+import time
 
-pokemons_list = pokemons.split()
+
+def get_pokemon_list():
+    pokemons_list = []
+    with open("pokemons.csv") as file_object:
+        for line in file_object:
+            pokemons_list.append(line.rstrip().lower())
+    return pokemons_list
 
 
 def user_name():
@@ -21,14 +21,18 @@ def get_pokemon_name(user):
     return pokemon
 
 
-
 def main():
+    os.system('clear')
+    pokemons_list = get_pokemon_list()
+
     first_user = user_name()
     second_user = user_name()
 
     while True:
         while True:
+            os.system('clear')
             pokemons_popped = []
+
             first_pokemon = get_pokemon_name(first_user)
             if first_pokemon in pokemons_list:
                 pokemons_popped.append(first_pokemon)
@@ -39,7 +43,9 @@ def main():
                 if second_pokemon in pokemons_list and second_pokemon[0] == first_pokemon[-1]:
                     pokemons_popped.append(second_pokemon)
                     pokemons_list.remove(second_pokemon)
-                    print()
+                    print("\nGOOD ANSWER!")
+                    time.sleep(3)
+
                     continue
                 else:
                     print("\n{} you lose!" .format(second_user.title()))
@@ -50,6 +56,7 @@ def main():
 
         repeat_game = input("\nDo you want to play again (y/n)? ")
         if repeat_game == 'y':
+            print()
             continue
         else:
             break
