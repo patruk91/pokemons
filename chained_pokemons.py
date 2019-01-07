@@ -15,31 +15,44 @@ def user_name():
     return user
 
 
+def get_pokemon_name(user):
+    pokemon = input(
+        "{} say name of your pokemon: ".format(user.title())).lower()
+    return pokemon
+
 
 
 def main():
     first_user = user_name()
     second_user = user_name()
 
-    first_pokemon = input(
-        "{} say name of your first pokemon: ".format(first_user.title())).lower()
-
     while True:
-        popped_pokemons = []
-        if first_pokemon in pokemons_list:
-            popped_pokemons.append(first_pokemon)
-            pokemons_list.remove(first_pokemon)
-            second_pokemon = input(
-                "{} say name of your pokemon (name need to begin with"
-                " the last letter of previous word): ".format(second_user.title())).lower()
-            if second_pokemon[0] == first_pokemon[-1] and second_pokemon in pokemons_list:
-                popped_pokemons.append(second_pokemon)
+        while True:
+            pokemons_popped = []
+            first_pokemon = get_pokemon_name(first_user)
+            if first_pokemon in pokemons_list:
+                pokemons_popped.append(first_pokemon)
                 pokemons_list.remove(first_pokemon)
-                continue
+
+                second_pokemon = get_pokemon_name(second_user)
+
+                if second_pokemon in pokemons_list and second_pokemon[0] == first_pokemon[-1]:
+                    pokemons_popped.append(second_pokemon)
+                    pokemons_list.remove(second_pokemon)
+                    print()
+                    continue
+                else:
+                    print("\n{} you lose!" .format(second_user.title()))
+                    break
             else:
-                print("{} lose!" .format(second_user).title())
+                print("\n{} you lose!".format(first_user.title()))
+                break
+
+        repeat_game = input("\nDo you want to play again (y/n)? ")
+        if repeat_game == 'y':
+            continue
         else:
-            print("{} lose!".format(first_user).title())
+            break
 
 
 if __name__ == "__main__":
